@@ -1,5 +1,8 @@
 # grep-folder
-Emacs small package to help you grep your folders and correct configure it
+Emacs small package to help you grep your folders and correct configure it.
+
+
+I am using `grep` during all day long. I had written a function that was just perfect for me to grep my files. However, I started to need to extend that function to be work for other directories as well. I tried `counsel-git-grep`, but for some reason it is really tooo slow in my machine (MacBook Air (13-inch, 2017)) and I could not make the "exclude directories" and "exclude files" to work and get out a lot of unwanted results from my search. Therefore, I decided to improve a little bit of my functions and transform it in a small packages. Hope this could be useful to someone else.
 
 
 # Instillation
