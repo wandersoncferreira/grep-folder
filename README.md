@@ -8,7 +8,11 @@ Emacs small package to help you grep your folders and correct configure it
 (add-to-list 'load-path "~/.emacs.d/site-packages/grep-folder")
 (require 'grep-folder)
 (global-set-key (kbd "C-c g") 'grep-folder)
+
 ```
+
+
+**IMPORTANT**: The version of your `grep` command should be `>=2.5.2`.
 
 # Usage
 
