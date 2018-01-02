@@ -29,11 +29,12 @@
 ;;; Code:
 
 (require 'ivy)
+(require 'grep)
 
 ;; these variables holds all the folders you want to grep and their excluded options
 ;; the emacs dir is setup by default without any excluded directory.
-(defvar grep-folder-setup-dirs '((user-emacs-directory . ())))
-(defvar grep-folder-setup-files '((user-emacs-directory . ())))
+(defvar grep-folder-setup-dirs '(("~/.emacs.d" . ())))
+(defvar grep-folder-setup-files '(("~/.emacs.d" . ())))
 
 (defun grep-folder-get-all-folders ()
   "Function to get all the folder configured by the user."
@@ -63,7 +64,7 @@
   (interactive)
   (ivy-read "Folder: "
             (grep-folder-get-all-folders)
-            :preselect user-emacs-directory
+            :preselect "~/.emacs.d"
             :require-match t
             :sort t
             :action (lambda (x) (grep-folder-function x))))
@@ -76,6 +77,17 @@
          (exclude-all (concat exclude-dirs exclude-files)))
     (grep (concat "grep --color -nrH" exclude-all " -e " string-search " " folder-name))
     (other-window 1)))
+
+(defun grep-folder-goto-file-kill-buffer ()
+  "Kill the *grep* buffer when hit C-RET."
+  (interactive)
+  (compile-goto-error)
+  (kill-buffer "*grep*")
+  (delete-other-windows))
+
+(eval-after-load "grep"
+  '(progn
+     (define-key grep-mode-map (kbd "C-<return>") 'grep-folder-goto-file-kill-buffer)))
 
 (provide 'grep-folder)
 ;;; grep-folder.el ends here
