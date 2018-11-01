@@ -3,7 +3,7 @@
 ;; Copyright (C)
 ;; Author: Wanderson Ferreira <https://github.com/wandersoncferreira>
 ;; Package: grep-folder
-;; Package-Requires: ((emacs "24.4") (ivy "0.10.0"))
+;; Package-Requires: ((emacs "24.4"))
 ;; Version: 0.1
 
 ;; This file is not part of GNU Emacs.
@@ -28,7 +28,6 @@
 
 ;;; Code:
 
-(require 'ivy)
 (require 'grep)
 
 ;; these variables holds all the folders you want to grep and their excluded options
@@ -62,12 +61,8 @@
 (defun grep-folder ()
   "Function to help you grep your folders `grep-folder'."
   (interactive)
-  (ivy-read "Folder: "
-            (grep-folder-get-all-folders)
-            :preselect "~/.emacs.d"
-            :require-match t
-            :sort t
-            :action (lambda (x) (grep-folder-function x))))
+  (let ((choice (ido-completing-read "Folder: " (grep-folder-get-all-folders))))
+    (grep-folder-function choice)))
 
 (defun grep-folder-function (folder-name)
   "Function that execute the search inside the FOLDER-NAME."
